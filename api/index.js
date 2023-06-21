@@ -40,7 +40,12 @@ const express_session_1 = __importDefault(require("express-session"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173',
+    origin: process.env.PRODUCTION === 'true'
+        ? [
+            'https://workout-tracker.raymondleemv.com',
+            'https://workout-tracker-git-development-raymondleemv.vercel.app',
+        ]
+        : 'http://localhost:5173',
     credentials: true,
 }));
 (0, config_database_1.default)();
@@ -53,7 +58,13 @@ app.use((0, express_session_1.default)({
     }),
 }));
 app.use(passport_1.default.authenticate('session'));
+app.get('/api', (req, res) => {
+    res.send('hello world');
+});
 app.use('/api/auth', auth_route_1.default);
+app.get('/api/testing', (req, res) => {
+    res.send('hello world');
+});
 app.use(auth_route_1.ensureLoggedIn);
 app.use('/api/exercises', exercises_route_1.default);
 app.use('/api/users', users_route_1.default);
@@ -62,3 +73,4 @@ app.use('/api/workout-items', workoutItems_route_1.default);
 app.listen(3002, () => {
     console.log('app listenting on port 3002.');
 });
+exports.default = app;
