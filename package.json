@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "api/index.js",
 	"scripts": {
-		"start": "node api/index.ts",
+		"start": "node api/index.js",
 		"test": "npx jasmine spec/**/*.[sS]pec.js",
 		"dev": "nodemon api/index.js"
 	},
